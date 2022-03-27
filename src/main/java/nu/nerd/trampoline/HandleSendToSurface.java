@@ -41,7 +41,7 @@ public class HandleSendToSurface extends HandleSendTo {
     @Override
     public void handle(Player player, Logger logger) {
         Location loc = player.getLocation();
-        if (loc.getY() <= Trampoline.CONFIG.TELEPORT_Y) {
+        if (loc.getY() <= loc.getWorld().getMinHeight() + Trampoline.CONFIG.TELEPORT_Y) {
             Location safeLoc = findSafeLocation(loc, logger);
 
             // Don't dump the player at the bottom of the ocean either!
@@ -84,8 +84,8 @@ public class HandleSendToSurface extends HandleSendTo {
     /**
      * Return a safe location to put the player, based on their starting
      * location.
-     * 
-     * @param loc the player's current location.
+     *
+     * @param loc    the player's current location.
      * @param logger for logging to console.
      * @return a safe location to stand.
      */
@@ -131,7 +131,7 @@ public class HandleSendToSurface extends HandleSendTo {
     /**
      * Return the fail safe location in the specified world, defaulting to atop
      * the highest block at (0,0) if no fail safe is configured.
-     * 
+     *
      * @param world the world containing the location.
      * @return the fail safe location.
      */

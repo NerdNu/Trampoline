@@ -18,17 +18,20 @@ public class Configuration {
     public int CHECK_TICKS;
 
     /**
-     * Y coordinate at or below which potion effects are applied.
+     * Y coordinate at or below which potion effects are applied, expressed
+     * relative to WorldInfo.getMinHeight().
      */
     public int EFFECT_Y;
 
     /**
-     * Y coordinate at or below which the player will teleport.
+     * Y coordinate at or below which the player will teleport, expressed
+     * relative to WorldInfo.getMinHeight().
      */
     public int TELEPORT_Y;
 
     /**
-     * Y coordinate at or below which to teleport non-player entities.
+     * Y coordinate at or below which to teleport non-player entities, expressed
+     * relative to WorldInfo.getMinHeight().
      */
     public int ENTITY_TELEPORT_Y;
 
@@ -52,7 +55,7 @@ public class Configuration {
     // ------------------------------------------------------------------------
     /**
      * Reload the configuration.
-     * 
+     *
      * @param logged if true, configuration settings are logged to the console.
      */
     public void reload(boolean logged) {

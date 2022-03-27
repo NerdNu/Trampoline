@@ -46,12 +46,21 @@ players from suffocating in the void.
 ## Configuration
 ### General Settings
 
+Note that as of Trampoline version 1.1.0, configurable Y coordinates are
+expressed *relative* to the Y coordinate at which the void starts. In versions
+of Minecraft prior to 1.17, the void always began below Y0. But in Minecraft
+1.17 and later, the overworld has negative Y coordinates containing breatheable
+air down to Y=-63 in the overworld. There the void, which suffocates the player,
+starts at Y=-64. So, a `teleport-y` setting of -40 actually means Y=-104 in
+the overworld, but Y=-40 in the nether and end.
+
+
 | Setting | Default | Description |
 | :--- | :--- | :---
 | `check-ticks` | 4 | The period in ticks between checks of player and entity locations. |
-| `effect-y` | -20 | The Y coordinate below which potion effects are applied to players. |
-| `teleport-y` | -40 | The Y coordinate below which the player is teleported to the destination world. |
-| `entity-teleport-y` | -30 | The Y coordinate below which configured entity types are teleported (from `send-to: sky` worlds only). |
+| `effect-y` | -20 | The void-relative Y coordinate below which potion effects are applied to players. |
+| `teleport-y` | -40 | The void-relative Y coordinate below which the player is teleported to the destination world. |
+| `entity-teleport-y` | -30 | The void-relative Y coordinate below which configured entity types are teleported (from `send-to: sky` worlds only). |
 | `world-border-buffer` | 50 | The buffer zone at the world border into which players cannot be teleported. |
 
 

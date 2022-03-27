@@ -68,12 +68,12 @@ public class HandleSendToSky extends HandleSendTo {
     @Override
     public void handle(Player player, Logger logger) {
         Location loc = player.getLocation();
-        if (loc.getY() <= Trampoline.CONFIG.EFFECT_Y) {
+        if (loc.getY() <= loc.getWorld().getMinHeight() + Trampoline.CONFIG.EFFECT_Y) {
             // Re-adding the same effect for lower Y is a no-op.
             _potionEffects.stream().forEach(player::addPotionEffect);
         }
 
-        if (loc.getY() <= Trampoline.CONFIG.TELEPORT_Y) {
+        if (loc.getY() <= loc.getWorld().getMinHeight() + Trampoline.CONFIG.TELEPORT_Y) {
             teleportEntity(player, logger);
 
             String message = _messages.get(Util.randomInt(_messages.size())).replace("&p", player.getName());
@@ -85,7 +85,7 @@ public class HandleSendToSky extends HandleSendTo {
     /**
      * Teleport entities that have fallen out of the world if they are eligible
      * for teleportation.
-     * 
+     *
      * @param logger for logging to console.
      */
     public void teleportEntities(Logger logger) {
@@ -96,7 +96,7 @@ public class HandleSendToSky extends HandleSendTo {
         World world = Bukkit.getWorld(_sourceWorldName);
         for (Entity entity : world.getEntities()) {
             if (_teleportedMobs.contains(entity.getType()) &&
-                entity.getLocation().getY() <= Trampoline.CONFIG.ENTITY_TELEPORT_Y) {
+                entity.getLocation().getY() <= world.getMinHeight() + Trampoline.CONFIG.ENTITY_TELEPORT_Y) {
                 teleportEntity(entity, logger);
             }
         }
@@ -106,7 +106,7 @@ public class HandleSendToSky extends HandleSendTo {
     /**
      * Teleport the specified entity from its current world to the destination
      * world.
-     * 
+     *
      * @param entity the entity to teleport.
      * @param logger for logging to console.
      */
@@ -153,10 +153,10 @@ public class HandleSendToSky extends HandleSendTo {
         String potionEffects = _potionEffects.isEmpty() ? "no effects"
                                                         : _potionEffects.size() + " effects: " +
                                                           _potionEffects.stream()
-                                                          .map(p -> p.getDuration() + " ticks " +
-                                                                    p.getType().getName() + " x " +
-                                                                    (p.getAmplifier() + 1))
-                                                          .collect(Collectors.joining(", "));
+                                                              .map(p -> p.getDuration() + " ticks " +
+                                                                        p.getType().getName() + " x " +
+                                                                        (p.getAmplifier() + 1))
+                                                              .collect(Collectors.joining(", "));
         String messages = _messages.isEmpty() ? "no messages"
                                               : _messages.size() + ", messages:\n" +
                                                 _messages.stream().map(b -> "    " + b).collect(Collectors.joining("\n"));
